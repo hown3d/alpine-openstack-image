@@ -9,7 +9,7 @@
         "{{user `root_pw`}}<enter><wait>",
         "{{user `root_pw`}}<enter><wait15>",
         "no<enter><wait5>",
-        "<wait>y<enter><wait15>",
+        "<wait>y<enter><wait120>",
         "rc-service sshd stop<enter>",
         "mount /dev/vg0/lv_root /mnt<enter>",
         "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
@@ -17,39 +17,23 @@
         "reboot<enter>"
       ],
       "disk_size": "{{user `disk`}}",
-      "guest_additions_mode": "disable",
-      "guest_os_type": "Linux_64",
       "http_directory": "http",
-      "iso_checksum": "file:https://dl-cdn.alpinelinux.org/alpine/v3.23/releases/x86_64/alpine-virt-3.23.3-x86_64.iso.sha256",
-      "iso_url": "https://dl-cdn.alpinelinux.org/alpine/v3.23/releases/x86_64/alpine-virt-3.23.3-x86_64.iso",
+      "iso_checksum": "file:https://dl-cdn.alpinelinux.org/alpine/v3.23/releases/x86_64/alpine-virt-3.23.7-x86_64.iso.sha256",
+      "iso_url": "https://dl-cdn.alpinelinux.org/alpine/v3.23/releases/x86_64/alpine-virt-3.23.7-x86_64.iso",
       "shutdown_command": "/sbin/poweroff",
       "ssh_password": "{{user `root_pw`}}",
       "ssh_username": "root",
-      "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{ .Name }}",
-          "--memory",
-          "{{ user `mem`}}"
-        ],
-        [
-          "modifyvm",
-          "{{ .Name }}",
-          "--cpus",
-          "{{user `cpus`}}"
-        ]
-      ],
-      "vm_name": "alpine323"
+      "format": "qcow2",
+      "cpus": "{{user `cpus`}}",
+      "memory": "{{user `mem`}}",
+      "vm_name": "alpine323",
+      "type": "qemu",
+      "use_default_display": true
     }
   ],
   "provisioners": [
     {
-      "override": {
-        "virtualbox-iso": {
-          "execute_command": "/bin/sh '{{ .Path }}'"
-        }
-      },
+      "execute_command": "/bin/sh '{{ .Path }}'",
       "scripts": [
         "scripts/00_base.sh",
         "scripts/01_openstack.sh",

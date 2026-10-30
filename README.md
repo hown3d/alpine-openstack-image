@@ -5,8 +5,8 @@ Alpine Linux OpenStack VM Image
 
 Install Packer: https://www.packer.io/intro/getting-started/install.html
 
-### Install virtualbox plugin
-`packer plugins install github.com/hashicorp/virtualbox`
+### Install qemu plugin
+`packer plugins install github.com/hashicorp/qemu`
 
 ## Getting Started
 
